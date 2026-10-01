@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7f1">
+  <title>Study Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="Study Timer home"><span class="wordmark-mark">S</span> STUDY TIMER</a>
+    <div class="header-tools">
+      <label class="theme-toggle" title="Toggle dark mode">
+        <input id="theme-toggle" type="checkbox" aria-label="Toggle dark mode">
+        <span class="theme-switch" aria-hidden="true"><span></span></span>
+        <span>Dark mode</span>
+      </label>
+      <span class="header-note">A SESSION PLANNER</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">MAKE A LITTLE ROOM TO THINK</p>
+      <h1 id="page-title">Homework, <span>in focus.</span></h1>
+      <p class="intro-copy">Build a work-and-rest rhythm around the time and energy you have today.</p>
+    </section>
+
+    <div class="workspace">
+      <section class="setup" aria-labelledby="setup-title">
+        <div class="section-heading">
+          <span class="step-number">01</span>
+          <div>
+            <p class="eyebrow">YOUR SESSION</p>
+            <h2 id="setup-title">Set the shape</h2>
+          </div>
+        </div>
+
+        <form id="session-form" novalidate>
+          <fieldset class="mode-fieldset">
+            <legend>What do you know about the work?</legend>
+            <div class="segmented" role="radiogroup" aria-label="Workload input type">
+              <label class="segment"><input type="radio" name="mode" value="time" checked><span>Time needed</span></label>
+              <label class="segment"><input type="radio" name="mode" value="assignments"><span>Assignments</span></label>
+            </div>
+          </fieldset>
+
+          <div id="time-fields" class="mode-fields">
+            <label class="field-label" for="work-minutes">Expected work time <span>(minutes)</span></label>
+            <div class="number-wrap">
+              <input id="work-minutes" name="workMinutes" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 90" aria-describedby="time-hint time-error">
+              <span class="input-unit" aria-hidden="true">MIN</span>
+            </div>
+            <p class="field-hint" id="time-hint">Enter a whole number from 15 to 720.</p>
+            <p class="field-error" id="time-error" aria-live="polite"></p>
+          </div>
+
+          <div id="assignment-fields" class="mode-fields" hidden>
+            <div class="field-group">
+              <label class="field-label" for="assignment-count">Number of assignments</label>
+              <input id="assignment-count" name="assignmentCount" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g. 3" aria-describedby="count-error">
+              <p class="field-error" id="count-error" aria-live="polite"></p>
+            </div>
+            <fieldset class="choice-fieldset">
+              <legend>Overall difficulty</legend>
+              <div class="choice-row">
+                <label class="choice"><input type="radio" name="difficulty" value="easy"><span>Easy</span></label>
+                <label class="choice"><input type="radio" name="difficulty" value="medium"><span>Medium</span></label>
+                <label class="choice"><input type="radio" name="difficulty" value="hard"><span>Hard</span></label>
+              </div>
+              <p class="field-error" id="difficulty-error" aria-live="polite"></p>
+            </fieldset>
+          </div>
+
+          <fieldset class="choice-fieldset tired-fieldset">
+            <legend>How tired are you feeling?</legend>
+            <div class="choice-row tired-choices">
+              <label class="choice"><input type="radio" name="tiredness" value="low"><span>Not very</span></label>
+              <label class="choice"><input type="radio" name="tiredness" value="medium"><span>Somewhat</span></label>
+              <label class="choice"><input type="radio" name="tiredness" value="high"><span>Very</span></label>
+            </div>
+            <p class="field-error" id="tiredness-error" aria-live="polite"></p>
+          </fieldset>
+
+          <button class="primary-button" type="submit"><span>Build my session</span><span aria-hidden="true">↗</span></button>
+          <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="session" aria-labelledby="session-title">
+        <div class="section-heading session-heading">
+          <span class="step-number">02</span>
+          <div>
+            <p class="eyebrow">READY WHEN YOU ARE</p>
+            <h2 id="session-title" tabindex="-1">Your rhythm</h2>
+          </div>
+          <label class="sound-toggle" title="Turn boundary alarm on or off">
+            <input id="alarm-enabled" type="checkbox" checked>
+            <span class="sound-icon" aria-hidden="true">♪</span>
+            <span>Alarm</span>
+          </label>
+        </div>
+
+        <div id="empty-state" class="empty-state">
+          <div class="empty-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <p>Your plan will appear here.</p>
+          <span>Choose your workload to get started.</span>
+          <img class="study-image" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&amp;fit=crop&amp;w=900&amp;q=82" alt="A student writing notes at a desk" loading="lazy">
+        </div>
+
+        <div id="session-content" hidden>
+          <div class="timer-display" aria-live="off">
+            <div class="timer-meta"><span class="live-dot"></span><span id="period-label">WORK PERIOD 01</span><span id="timer-status">READY</span></div>
+            <p class="timer-clock" id="timer-clock">25:00</p>
+            <div class="progress-track" role="progressbar" aria-label="Current period progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="timer-progress"><span id="progress-fill"></span></div>
+            <div class="timer-caption"><span id="period-detail">Focus time</span><span id="total-detail">0 min total work</span></div>
+          </div>
+
+          <div class="timer-controls">
+            <button class="primary-button timer-action" id="start-button" type="button"><span>Start session</span><span aria-hidden="true">→</span></button>
+            <button class="secondary-button" id="pause-button" type="button" hidden>Pause</button>
+            <button class="icon-button" id="reset-button" type="button" aria-label="Reset session" title="Reset session" disabled>↺</button>
+          </div>
+
+          <div class="schedule-heading"><h3>Session map</h3><span id="schedule-summary"></span></div>
+          <ol class="schedule-list" id="schedule-list" aria-label="Session periods"></ol>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><span>STUDY TIMER</span><span>One period at a time.</span></footer>
+</body>
+</html>
